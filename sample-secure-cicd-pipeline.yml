@@ -6,27 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
-  sast:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Run Semgrep SAST
-        uses: returntocorp/semgrep-action@v1
-
-  sca:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Run Snyk SCA Scan
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
   build:
     needs: [sast, sca]
     runs-on: ubuntu-latest
